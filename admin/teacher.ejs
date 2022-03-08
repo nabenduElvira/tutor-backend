@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AdminLTE 3 | DataTables</title>
+    <%- include('css-link'); -%>
+  </head>
+  <body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+      <%- include('navbar.ejs'); -%>
+
+      <!-- Main Sidebar Container -->
+      <%- include('sidebar.ejs'); -%>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1>TEACHER</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active">Teachers</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Teacher's listing</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <table
+                      id="example2"
+                      class="table table-bordered table-hover"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Phone</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(result.length > 0){ result.forEach((item, index) => { %>
+                        <tr>
+                          <td><%= item.id %></td>
+                          <td><%= item.first_name %> <%= item.last_name %></td>
+                          <td><%= item.email %></td>
+                          <td><%= item.phone %></td>
+                          <td>
+                            <a href="/user/status/<%= item.user_id %>"
+                              ><%= ((item.status == '1')?
+                              'Activate':'Inactivate')%></a
+                            >
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-default"
+                              data-toggle="modal"
+                              data-target="#modal-lg-edit-<%= item.id %>"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-default"
+                              data-toggle="modal"
+                              data-target="#modal-lg-delete-<%= item.id %>"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                        <div class="modal fade" id="modal-lg-edit-<%= item.id %>">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Edit Teacher</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/admin/teacheredit" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="id" value="<%= item.id %>">
+                                        <div class="mb-3">
+                                          <label for="exampleInputPassword1" class="form-label">First Name</label>
+                                          <input type="text" class="form-control" id="exampleInputPassword1" value="<%= item.first_name %>" name="first_name">
+                                        </div>
+                                        <div class="mb-3">
+                                          <label for="exampleInputPassword1" class="form-label">Last Name</label>
+                                          <input type="text" class="form-control" id="exampleInputPassword1" value="<%= item.last_name %>" name="last_name">
+                                        </div>
+                                        <div class="mb-3">
+                                          <label for="exampleInputEmail1" class="form-label">Teaches</label>
+                                          <%= item.teaches %>
+                                          <select class="select2" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
+                                            <% teaches.forEach((teach, index) => { %>
+
+                                                
+                                                    
+                                                    
+                                                        <option value="<%= teach.name %>"><%= teach.name %></option>
+                                                    
+                                            
+                                            <% }) %>
+                                            
+                                          </select>
+                                        </div>
+                                         
+                                        
+                                        <div class="mb-3">
+                                          <label for="exampleInputPassword1" class="form-label">Teaches From</label>
+                                          <input type="text" class="form-control" id="exampleInputPassword1" value="<%= item.teaches_from %>" name="teaches_from">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Topics</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1" value="<%= item.topics %>" name="topics">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">About</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1" value="<%= item.about %>" name="about">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Location</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1" value="<%= item.location %>" name="location">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Response Time</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1" value="<%= item.response_time %>" name="response_time">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Ratting</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1" value="<%= item.ratting %>" name="ratting">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Accents</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1" value="<%= item.accents %>" name="accents">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Lession Include</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1" value="<%= item.lession_include %>" name="lession_include">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Subject</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1" value="<%= item.subject %>" name="subject">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Educations</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1" value="<%= item.education %>" name="education">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Work Experiens</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1" name="work_exp" value="<%= item.work_exp %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Certificate</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1" name="certificate" value="<%= item.certificate %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Youtube id</label>
+                                            <input type="text" class="form-control" id="exampleInputPassword1" name="youtube_id" value="<%= item.youtube_id %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputPassword1" class="form-label">Upload Video</label>
+                                            <input type="file" class="form-control" id="exampleInputPassword1" name="upload_video" value="<%= item.upload_video %>">
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                      </form>
+                                </div>
+                                <!-- <div class="modal-footer justify-content-between">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-primary">Save changes</button>
+                                </div> -->
+                              </div>
+                              <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                          </div>
+                          <div class="modal fade" id="modal-lg-delete-<%= item.id %>">
+                            <div class="modal-dialog modal-sm">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Delete Teacher</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/admin/teacherdelete" method="post" enctype="multipart/form-data">
+                                        <p>Are You Sure To delete?</p>
+                                        <input type="hidden" name="id" value="<%= item.id %>">
+                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                    </form>
+                                  
+                                </div>
+                                <!-- <div class="modal-footer justify-content-between">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-primary">Save changes</button>
+                                </div> -->
+                              </div>
+                              <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                          </div>
+                        <% })} %>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th>Id</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Phone</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+      <%- include('footer.ejs'); -%>
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <%- include('js-link'); -%>
+    <script>
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        });
+    </script>
+  </body>
+</html>

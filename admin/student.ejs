@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AdminLTE 3 | DataTables</title>
+    <%- include('css-link'); -%>
+  </head>
+  <body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+      <%- include('navbar.ejs'); -%>
+
+      <!-- Main Sidebar Container -->
+      <%- include('sidebar.ejs'); -%>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1>STUDENT</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active">Students</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Student's listing</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <table
+                      id="example2"
+                      class="table table-bordered table-hover"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Phone</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(result.length > 0){ result.forEach((item, index) => { %>
+                        <tr>
+                          <td><%= item.id %></td>
+                          <td><%= item.first_name %> <%= item.last_name %></td>
+                          <td><%= item.email %></td>
+                          <td><%= item.phone %></td>
+                          <td>
+                            <a href="/user/status/<%= item.user_id %>"
+                              ><%= ((item.status == '1')?
+                              'Activate':'Inactivate')%></a
+                            >
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-default"
+                              data-toggle="modal"
+                              data-target="#modal-lg-edit-<%= item.id %>"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-default"
+                              data-toggle="modal"
+                              data-target="#modal-lg-delete-<%= item.id %>"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                        <div class="modal fade" id="modal-lg-edit-<%= item.id %>">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Edit Teacher</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="mb-3">
+                                          <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                        </div>
+                                        <div class="mb-3">
+                                          <label for="exampleInputPassword1" class="form-label">Password</label>
+                                          <input type="password" class="form-control" id="exampleInputPassword1">
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                      </form>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                              </div>
+                              <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                          </div>
+                          <div class="modal fade" id="modal-lg-delete-<%= item.id %>">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Large Modal</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <p>One fine body&hellip;</p>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                              </div>
+                              <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                          </div>
+                        <% })} %>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th>Id</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Phone</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+      <%- include('footer.ejs'); -%>
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <%- include('js-link'); -%>
+  </body>
+</html>
