@@ -100,6 +100,8 @@ Subject.updateById=(id,subject,result)=>{
         }
     )
 }
+
+
 Subject.remove=(id,result)=>{
     sql.query("DELETE FROM subjects WHERE id=?",id,(err,res)=>{
         if(err){

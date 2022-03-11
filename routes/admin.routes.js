@@ -8,6 +8,8 @@ module.exports=app=>{
    app.get('/admin/student',admin.student);
    app.post('/admin/teacheredit',admin.editteacher);
    app.post('/admin/teacherdelete',admin.deleteteacher);
+   app.post('/admin/deletecourse',admin.deletecourse);
+   app.post('/admin/courseedit',admin.editcourse);
    app.get('/admin/course',admin.course);
    app.post('/admin/createcourse',admin.create);
 

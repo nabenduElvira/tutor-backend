@@ -48,6 +48,7 @@ require("./routes/notification.routes.js")(app);
 require("./routes/requestteacher.routes.js")(app);
 require("./routes/jobrequest.routes.js")(app);
 require("./routes/privatelessons.routes.js")(app);
+require("./routes/course.routes.js")(app);
 require("./routes/admin.routes.js")(app);
 
 app.listen(7200,()=>{
